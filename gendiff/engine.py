@@ -6,7 +6,7 @@ import json
 
 def engine(tool):
     """
-    Take two paths to json files and apply tool to them.
+    Apply tool to 2  arguments given in terminal.
 
     Args:
         tool (str): tool, that compares two json files
