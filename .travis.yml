@@ -1,6 +1,6 @@
 language: python
 python: 3.8
 
-instal:
+before_install:
+  # make depends on poetry
   - pip install poetry
-  - poetry install
