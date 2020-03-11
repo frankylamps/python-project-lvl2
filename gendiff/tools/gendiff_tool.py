@@ -31,13 +31,11 @@ def generate_diff(d1, d2):
     all_keys = set(d1.keys()) | set(d2.keys())
     comparison = ''
     for key in all_keys:
-        if key in intersected_keys:
-            if d1[key] == d2[key]:
-                comparison = add_item(comparison, key, d1[key])
-            else:
-                comparison = add_item(comparison, key, d2[key], '+')
-                comparison = add_item(comparison, key, d1[key], '-')
-
+        if key in intersected_keys and d1[key] == d2[key]:
+            comparison = add_item(comparison, key, d1[key])
+        elif key in intersected_keys:
+            comparison = add_item(comparison, key, d2[key], '+')
+            comparison = add_item(comparison, key, d1[key], '-')
         elif key in set(d1.keys()):
             comparison = add_item(comparison, key, d1[key], '-')
         else:
