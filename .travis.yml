@@ -1,6 +1,10 @@
 language: python
 python: 3.8
 
-before_install:
-  # make depends on poetry
+instal:
   - pip install poetry
+  - make
+  - poetry install
+  - pip install flake8
+
+script: make lint
