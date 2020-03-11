@@ -8,3 +8,4 @@ Bash command to install the package:
 pip install -i https://test.pypi.org/simple/ franky-gendiff --extra-index-url https://pypi.org/simple
 ```
 
+[![asciicast](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA.svg)](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA)
