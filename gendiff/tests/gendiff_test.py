@@ -8,7 +8,7 @@ path1 = 'gendiff/tests/fixtures/d1.json'
 path2 = 'gendiff/tests/fixtures/d2.json'
 
 answer = '{\n  host: hexlet.io\n- proxy: 123.234.53.22\n+ verbose:' \
-' True\n+ timeout: 20\n- timeout: 50\n}'
+' True\n+ timeout: 20\n- timeout: 50\n}'  # noqa:E122
 
 
 def test_one():

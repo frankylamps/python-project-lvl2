@@ -25,7 +25,7 @@ def get_keys(json_like_string):
 
 
 def check_keywords_sequence(json_like_string):
-    """Find out if all duplicate values are placed together."""  # noqa:DAR101, DAR201
+    """Find out if same values are placed together."""  # noqa:DAR101, DAR201
     keys = get_keys(json_like_string)
     for (n, i) in enumerate(keys):  # noqa:WPS111
         next_index = find_second_index(i, keys)
@@ -40,13 +40,8 @@ s1 = '{\n  host: hexlet.io\n+ timeout: 20\n- timeout: 50\n- proxy:' \
 s2 = '- timeout: 50\n- proxy:' \
     '123.234.53.22\n+ verbose: True\n{\n  host: hexlet.io\n+ timeout: 20\n}'
 
-# print(get_keys(s1))
-# print(check_keywords_sequence(s1))
-
 
 def get_sorted_list(json_like_string):
     string_as_list = json_like_string.split('\n')
     string_as_list.sort()
     return string_as_list
-
-# print(get_sorted_list(s1))
