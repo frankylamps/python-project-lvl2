@@ -5,7 +5,7 @@
 Bash command to install the package:
 
 ```bash
-pip install -i https://test.pypi.org/simple/ franky-gendiff --extra-index-url https://pypi.org/simple
+pip install -U -i https://test.pypi.org/simple/ franky-gendiff --extra-index-url https://pypi.org/simple
 ```
 
 [![asciicast](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA.svg)](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA)

@@ -7,4 +7,6 @@ instal:
   - poetry install
   - pip install flake8
 
-script: make lint
+script:
+  - make lint
+  - make tests
