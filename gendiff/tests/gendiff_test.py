@@ -4,19 +4,19 @@ from gendiff.gendiff_func import return_gendiff
 from gendiff.tests.fixtures.library import get_sorted_list
 from gendiff.tests.fixtures.library import check_keywords_sequence
 
-path1 = 'gendiff/tests/fixtures/d1.json'
-path2 = 'gendiff/tests/fixtures/d2.json'
 
-answer = '{\n  host: hexlet.io\n- proxy: 123.234.53.22\n+ verbose:' \
-' True\n+ timeout: 20\n- timeout: 50\n}'  # noqa:E122
-
-
-def test_one():
-    a = get_sorted_list(answer)
-    b = get_sorted_list(return_gendiff(path1, path2))
-    assert a == b
+def test_one():  # noqa:D103
+    path1 = 'gendiff/tests/fixtures/file1.json'
+    path2 = 'gendiff/tests/fixtures/file2.json'
+    answer = (open('gendiff/tests/fixtures/answer1.txt', 'r')).read()   # noqa: WPS515,E501
+    correct_answer = get_sorted_list(answer)
+    my_answer = get_sorted_list(return_gendiff(path1, path2))
+    assert my_answer == correct_answer  # noqa:S101
 
 
 def test_two():
-    b = check_keywords_sequence(return_gendiff(path1, path2))
-    assert b
+    """Check if the same values are placed together."""  # noqa:DAR101, DAR201
+    path1 = 'gendiff/tests/fixtures/file1.json'
+    path2 = 'gendiff/tests/fixtures/file2.json'
+    if_correct = check_keywords_sequence(return_gendiff(path1, path2))
+    assert if_correct
