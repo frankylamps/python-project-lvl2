@@ -3,6 +3,7 @@
 from gendiff.gendiff_func import return_gendiff
 from gendiff.tests.fixtures.library import get_sorted_list
 from gendiff.tests.fixtures.library import check_keywords_sequence
+from gendiff.scripts.gendiff import main
 
 
 def test_one():  # noqa:D103
@@ -19,4 +20,15 @@ def test_two():
     path1 = 'gendiff/tests/fixtures/file1.json'
     path2 = 'gendiff/tests/fixtures/file2.json'
     if_correct = check_keywords_sequence(return_gendiff(path1, path2))
-    assert if_correct
+    assert if_correct  # noqa:S101
+
+
+def test_three(capsys):  # noqa:D103
+    path1 = 'gendiff/tests/fixtures/file1.json'
+    path2 = 'gendiff/tests/fixtures/file2.json'
+    answer = (open('gendiff/tests/fixtures/answer1.txt', 'r')).read()   # noqa: WPS515,E501
+    correct_answer = get_sorted_list(answer)
+    main(path1, path2)
+    captured = capsys.readouterr()
+    my_answer = get_sorted_list(captured.out)[1:]
+    assert my_answer == correct_answer  # noqa:S101
