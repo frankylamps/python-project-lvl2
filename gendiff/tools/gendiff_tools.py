@@ -1,3 +1,8 @@
+import argparse
+import sys
+import json
+
+
 def add_item(string, key, value, sign=' '):  # noqa: WPS110
     """Return a string with added key and value."""  # noqa: DAR101, DAR201
     if string:
@@ -41,3 +46,22 @@ def generate_diff(d1, d2):
         else:
             comparison = add_item(comparison, key, d2[key], '+')
     return arrange_result(comparison)
+
+
+def parse_args(args=sys.argv[1:]):
+    parser = argparse.ArgumentParser(description='Generate diff')
+    parser.add_argument('first_file', type=str, default=None, nargs='?')
+    parser.add_argument('second_file', type=str, default=None, nargs='?')
+    parser.add_argument(
+        '-f', '--format', metavar='FORMAT', help='set format of output',
+    )
+
+    return parser.parse_args(args)
+
+
+def get_old_file(parser):
+    return json.load(open(parser.first_file))  # noqa: WPS515
+
+
+def get_new_file(parser):
+    return json.load(open(parser.second_file))  # noqa: WPS515

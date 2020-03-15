@@ -1,34 +1,29 @@
 #!/usr/bin/env python3
 
-from gendiff.gendiff_func import return_gendiff
 from gendiff.tests.fixtures.library import get_sorted_list
 from gendiff.tests.fixtures.library import check_keywords_sequence
-from gendiff.scripts.gendiff import main
+from gendiff.engine import engine
+from gendiff.tools.gendiff_tools import generate_diff
+from gendiff.tools.gendiff_tools import parse_args
 
 
-def test_one():  # noqa:D103
+def test_one(capsys):  # noqa:D103
     path1 = 'gendiff/tests/fixtures/file1.json'
     path2 = 'gendiff/tests/fixtures/file2.json'
     answer = (open('gendiff/tests/fixtures/answer1.txt', 'r')).read()   # noqa: WPS515,E501
-    correct_answer = get_sorted_list(answer)
-    my_answer = get_sorted_list(return_gendiff(path1, path2))
-    assert my_answer == correct_answer  # noqa:S101
+    expected = get_sorted_list(answer)
+
+    my_answer = get_sorted_list(
+        engine(generate_diff, parse_args([path1, path2])),
+    )
+    assert my_answer == expected  # noqa:S101
 
 
 def test_two():
     """Check if the same values are placed together."""  # noqa:DAR101, DAR201
     path1 = 'gendiff/tests/fixtures/file1.json'
     path2 = 'gendiff/tests/fixtures/file2.json'
-    if_correct = check_keywords_sequence(return_gendiff(path1, path2))
+    if_correct = check_keywords_sequence(
+        engine(generate_diff, parse_args([path1, path2])),
+    )
     assert if_correct  # noqa:S101
-
-
-def test_three(capsys):  # noqa:D103
-    path1 = 'gendiff/tests/fixtures/file1.json'
-    path2 = 'gendiff/tests/fixtures/file2.json'
-    answer = (open('gendiff/tests/fixtures/answer1.txt', 'r')).read()   # noqa: WPS515,E501
-    correct_answer = get_sorted_list(answer)
-    main(path1, path2)
-    captured = capsys.readouterr()
-    my_answer = get_sorted_list(captured.out)[1:]
-    assert my_answer == correct_answer  # noqa:S101
