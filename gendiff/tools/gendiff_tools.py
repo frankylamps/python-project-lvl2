@@ -34,17 +34,33 @@ def generate_diff(d1, d2):
     all_keys = set(d1.keys()) | set(d2.keys())
     comparison = ''
     for key in all_keys:
-        if key in intersected_keys and d1[key] == d2[key]:
+        key_status = get_key_status(key, d1, d2, all_keys, intersected_keys)
+        if key_status == 'no changes':
             comparison += add_item(key, d1[key])
-        elif key in intersected_keys:
+        elif key_status == 'different values':
             comparison += add_item(key, d2[key], '+')
             comparison += add_item(key, d1[key], '-')
-        elif key in set(d1.keys()):
+        elif key_status == 'only in d1':
             comparison += add_item(key, d1[key], '-')
-        else:
+        elif key_status == 'only in d2':
             comparison += add_item(key, d2[key], '+')
     return arrange_result(comparison)
 
+
+def get_key_status(
+    key,
+    d1,
+    d2,
+    all_keys,
+    intersected_keys,
+):
+    if key in intersected_keys and d1[key] == d2[key]:
+        return 'no changes'
+    elif key in intersected_keys:
+        return 'different values'
+    elif key in set(d1.keys()):
+        return 'only in d1'
+    return 'only in d2'
 
 def get_files(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description='Generate diff')
