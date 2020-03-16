@@ -6,9 +6,10 @@ python: 3.8
 
 instal:
   - pip install poetry
-  - make
   - poetry install
   - pip install flake8
+  - make lint
+  - make tests
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -17,8 +18,7 @@ before_script:
 
 script:
   - bundle exec rspec
-  - make lint
-  - make tests
+
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
