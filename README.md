@@ -10,4 +10,12 @@ Bash command to install the package:
 pip install -U -i https://test.pypi.org/simple/ franky-gendiff --extra-index-url https://pypi.org/simple
 ```
 
+gendiff-json:
+
 [![asciicast](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA.svg)](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA)
+
+
+
+gendiff-yaml:
+
+[![asciicast](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8.svg)](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8)
