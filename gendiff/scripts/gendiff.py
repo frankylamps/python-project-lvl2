@@ -2,12 +2,12 @@
 
 from gendiff.engine import engine
 from gendiff.tools.gendiff_tools import generate_diff
-from gendiff.tools.gendiff_tools import parse_args
+from gendiff.tools.gendiff_tools import get_files
 
 
 def main():
-    """Print string with difference between two files."""
-    print(engine(generate_diff, parse_args()))
+    """Print difference between two files."""
+    print(engine(generate_diff, get_files()))
 
 
 if __name__ == '__main__':

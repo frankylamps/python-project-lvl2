@@ -3,16 +3,14 @@ import sys
 import json
 
 
-def add_item(string, key, value, sign=' '):  # noqa: WPS110
+def add_item(key, value, sign=' '):  # noqa: WPS110
     """Return a string with added key and value."""  # noqa: DAR101, DAR201
-    if string:
-        return '{}\n{} {}: {}'.format(string, sign, key, value)  # noqa: P101
-    return '{} {}: {}'.format(sign, key, value)  # noqa: P101
+    return '\n{} {}: {}'.format(sign, key, value)  # noqa: P101
 
 
 def arrange_result(string):
     """Return a string in curly brackets."""  # noqa: DAR101, DAR201
-    return '{{\n{}\n}}'.format(string)  # noqa: P101
+    return '{{\n{}\n}}'.format(string[1:])  # noqa: P101
 
 
 def generate_diff(d1, d2):
@@ -37,18 +35,18 @@ def generate_diff(d1, d2):
     comparison = ''
     for key in all_keys:
         if key in intersected_keys and d1[key] == d2[key]:
-            comparison = add_item(comparison, key, d1[key])
+            comparison += add_item(key, d1[key])
         elif key in intersected_keys:
-            comparison = add_item(comparison, key, d2[key], '+')
-            comparison = add_item(comparison, key, d1[key], '-')
+            comparison += add_item(key, d2[key], '+')
+            comparison += add_item(key, d1[key], '-')
         elif key in set(d1.keys()):
-            comparison = add_item(comparison, key, d1[key], '-')
+            comparison += add_item(key, d1[key], '-')
         else:
-            comparison = add_item(comparison, key, d2[key], '+')
+            comparison += add_item(key, d2[key], '+')
     return arrange_result(comparison)
 
 
-def parse_args(args=sys.argv[1:]):
+def get_files(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description='Generate diff')
     parser.add_argument('first_file', type=str, default=None, nargs='?')
     parser.add_argument('second_file', type=str, default=None, nargs='?')
