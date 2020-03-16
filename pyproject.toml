@@ -12,6 +12,7 @@ packages = [
 python = "^3.8"
 pytest = "^5.3.5"
 pytest-cov = "^2.8.1"
+flake8 = "^3.7.9"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
