@@ -1,5 +1,3 @@
-import argparse
-import sys
 import json
 
 
@@ -46,20 +44,9 @@ def generate_diff(d1, d2):
     return arrange_result(comparison)
 
 
-def get_files(args=sys.argv[1:]):
-    parser = argparse.ArgumentParser(description='Generate diff')
-    parser.add_argument('first_file', type=str, default=None, nargs='?')
-    parser.add_argument('second_file', type=str, default=None, nargs='?')
-    parser.add_argument(
-        '-f', '--format', metavar='FORMAT', help='set format of output',
-    )
-
-    return parser.parse_args(args)
+def get_old_file(paths):
+    return json.load(open(paths[0]))  # noqa: WPS515
 
 
-def get_old_file(parser):
-    return json.load(open(parser.first_file))  # noqa: WPS515
-
-
-def get_new_file(parser):
-    return json.load(open(parser.second_file))  # noqa: WPS515
+def get_new_file(paths):
+    return json.load(open(paths[1]))  # noqa: WPS515
