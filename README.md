@@ -19,3 +19,9 @@ gendiff-json:
 gendiff-yaml:
 
 [![asciicast](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8.svg)](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8)
+
+
+
+gendiff nested data
+
+[![asciicast](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10.svg)](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10)
