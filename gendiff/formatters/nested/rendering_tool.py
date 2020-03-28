@@ -58,7 +58,7 @@ def render_nested(difference, indention=2, original=True):
                     attributes.get('key'),
                     '{',
                 ))
-                render_nested(attributes.get('value'), indention + 4, original=False)
+                render_nested(attributes.get('value'), indention + 4, original=False)  # noqa:E501
                 print('{}{}'.format(' ' * (indention + 2), '}'))  # noqa:P101
             else:
                 print_dict_structure(attributes, indention)

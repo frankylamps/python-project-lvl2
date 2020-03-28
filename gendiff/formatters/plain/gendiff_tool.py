@@ -14,16 +14,20 @@ def make_plain_structures(structure_old, structure_new):
     """
     def make_plain_structure(structure):
         plain_structure = {}
+
         def add_paths(structure, previous_path=''):  # noqa:WPS442
             for path in structure.keys():
                 if isinstance(structure[path], dict):
-                    add_paths(structure[path], '{}.{}'.format(previous_path, path))
+                    add_paths(
+                        structure[path],
+                        '{}.{}'.format(previous_path, path),
+                    )
                 else:
                     new_path = '{}.{}'.format(previous_path, path)[1:]
                     plain_structure[new_path] = structure[path]
         add_paths(structure)
         return plain_structure
-    
+
     return {
         'plain_structure_old': make_plain_structure(structure_old),
         'plain_structure_new': make_plain_structure(structure_new)
