@@ -1,5 +1,4 @@
 
-
 def add_item(  # noqa:WPS211
     dictionary,
     new_key,

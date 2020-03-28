@@ -1,17 +1,4 @@
-def get_all_keys(structure_old, structure_new):
-    """Return all keys from 2 dictionaries in alphabetical order.
-
-    Args:
-        structure_old (dict): Old doctionary
-        structure_new (dict): New structure
-
-    Returns:
-        [list]: list of all keys
-    """
-    all_keys_set = set(structure_old.keys()) | set(structure_new.keys())
-    all_keys_list = list(all_keys_set)
-    all_keys_list.sort()
-    return all_keys_list
+from gendiff.formatters.nested.gendiff_tool import get_all_keys
 
 
 def get_unique_path(path, paths):
