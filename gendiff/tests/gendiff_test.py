@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 from gendiff.engine import engine
-from gendiff.parsers.parsers import make_json_files
-from gendiff.parsers.parsers import make_yaml_files
+from gendiff.parsers.parsers import take_arguments
 from gendiff.formatters.plain.gendiff_tool import make_plain_structures
 from gendiff.formatters.nested.gendiff_tool import gen_nested_diff
 from gendiff.formatters.plain.rendering_tool import render_plain
@@ -15,7 +14,7 @@ def test_json_nested(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_nested.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_json_files([path1, path2]),
+        take_arguments([path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,
@@ -31,7 +30,7 @@ def test_json_flat(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_flat.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_json_files([path1, path2]),
+        take_arguments([path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,
@@ -47,7 +46,7 @@ def test_yaml_nested(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_nested.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_yaml_files([path1, path2]),
+        take_arguments([path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,
@@ -63,7 +62,7 @@ def test_yaml_flat(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_flat.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_yaml_files([path1, path2]),
+        take_arguments([path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,
@@ -79,7 +78,7 @@ def test_yaml_nested_plain(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_nested_plain.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_yaml_files(['-f', 'plain', path1, path2]),
+        take_arguments(['-f', 'plain', path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,
@@ -95,7 +94,7 @@ def test_json_nested_plain(capsys):  # noqa:D103
     expected = (open('gendiff/tests/fixtures/answer_nested_plain.txt', 'r')).read()   # noqa: WPS515,E501
     engine(
         gen_nested_diff,
-        make_json_files(['-f', 'plain', path1, path2]),
+        take_arguments(['-f', 'plain', path1, path2]),
         render_nested,
         make_plain_structures,
         render_plain,

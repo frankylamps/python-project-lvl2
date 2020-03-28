@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from gendiff.engine import engine
-from gendiff.parsers.parsers import make_json_files
+from gendiff.parsers.parsers import take_arguments
 from gendiff.formatters.plain.gendiff_tool import make_plain_structures
 from gendiff.formatters.nested.gendiff_tool import gen_nested_diff
 from gendiff.formatters.plain.rendering_tool import render_plain
@@ -12,7 +12,7 @@ def main():
     """Print difference between two files."""
     engine(
         gen_nested_diff,
-        make_json_files(),
+        take_arguments(),
         render_nested,
         make_plain_structures,
         render_plain,
