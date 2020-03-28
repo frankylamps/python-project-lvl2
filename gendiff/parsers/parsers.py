@@ -17,6 +17,7 @@ def make_json_files(args=sys.argv[1:]):
     return {
         'first file': json.load(open(paths.first_file)),
         'second file': json.load(open(paths.second_file)),
+        'format': paths.format,
     }
 
 
@@ -39,6 +40,7 @@ def make_yaml_files(args=sys.argv[1:]):
             (open(paths.second_file, 'r')),
             Loader=yaml.SafeLoader,
         ),
+        'format': paths.format,
     }
 
 
@@ -48,3 +50,7 @@ def get_first_file(files):
 
 def get_second_file(files):
     return files.get('second file')
+
+
+def get_format(files):
+    return files.get('format')

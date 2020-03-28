@@ -38,7 +38,7 @@ def print_dict_structure(attributes, indention):
     print('{}{}'.format(' ' * (indention + 2), '}'))  # noqa:P101
 
 
-def render(difference, indention=2, original=True):
+def render_nested(difference, indention=2, original=True):
     """Render the output of the gen_diff function.
 
     Arguments:
@@ -58,7 +58,7 @@ def render(difference, indention=2, original=True):
                     attributes.get('key'),
                     '{',
                 ))
-                render(attributes.get('value'), indention + 4, original=False)
+                render_nested(attributes.get('value'), indention + 4, original=False)
                 print('{}{}'.format(' ' * (indention + 2), '}'))  # noqa:P101
             else:
                 print_dict_structure(attributes, indention)

@@ -104,7 +104,7 @@ def determine_dict_type(key, dict_old, dict_new):
     return ''
 
 
-def gen_diff(dict_old, dict_new):  # noqa:WPS210
+def gen_nested_diff(dict_old, dict_new):  # noqa:WPS210
     """Parse two dictionaries and make the dictionary with differencies.
 
     Args:
@@ -133,7 +133,7 @@ def gen_diff(dict_old, dict_new):  # noqa:WPS210
                 add_item(
                     diff,
                     key,
-                    gen_diff(
+                    gen_nested_diff(
                         value_old,
                         value_new,
                     ),
