@@ -25,3 +25,9 @@ gendiff-yaml:
 gendiff nested data
 
 [![asciicast](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10.svg)](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10)
+
+
+
+gendiff plain format
+
+[![asciicast](https://asciinema.org/a/oQk0ppUAoTnytSLUchgKHTCn0.svg)](https://asciinema.org/a/oQk0ppUAoTnytSLUchgKHTCn0)
