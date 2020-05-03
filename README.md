@@ -10,24 +10,30 @@ Bash command to install the package:
 pip install -U -i https://test.pypi.org/simple/ franky-gendiff --extra-index-url https://pypi.org/simple
 ```
 
-gendiff-json:
+gendiff-json (step 3)
 
 [![asciicast](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA.svg)](https://asciinema.org/a/nb7aLRZoJD3FyoJyl6OI2PTPA)
 
 
 
-gendiff-yaml:
+gendiff-yaml (step 5)
 
 [![asciicast](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8.svg)](https://asciinema.org/a/osDfgiWP6T7I366jZEM9Vvaa8)
 
 
 
-gendiff nested data
+gendiff nested data (step 6)
 
 [![asciicast](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10.svg)](https://asciinema.org/a/C6OkQ2ZEVRN7DixSzkwESPN10)
 
 
 
-gendiff plain format
+gendiff -f plain (step 7)
 
 [![asciicast](https://asciinema.org/a/oQk0ppUAoTnytSLUchgKHTCn0.svg)](https://asciinema.org/a/oQk0ppUAoTnytSLUchgKHTCn0)
+
+
+
+gendiff -f yaml (step 8)
+
+[![asciicast](https://asciinema.org/a/GTisDHiHzzHAvhwalinqWUfGQ.svg)](https://asciinema.org/a/GTisDHiHzzHAvhwalinqWUfGQ)
