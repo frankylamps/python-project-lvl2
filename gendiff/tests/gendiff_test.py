@@ -64,16 +64,6 @@ def test_json_nested_plain(capsys):  # noqa:D103
     assert my_print.out == expected  # noqa:S101
 
 
-def test_json_nested_plain(capsys):  # noqa:D103
-    path1 = 'gendiff/tests/fixtures/file1_nested.json'
-    path2 = 'gendiff/tests/fixtures/file2_nested.json'
-    expected = (open('gendiff/tests/fixtures/answer_nested_plain.txt', 'r')).read()   # noqa: WPS515,E501
-    gendiff(take_arguments(['-f', 'plain', path1, path2]))
-    my_print = capsys.readouterr()
-
-    assert my_print.out == expected  # noqa:S101
-
-
 def test_json_nested_json(capsys):  # noqa:D103
     path1 = 'gendiff/tests/fixtures/file1_nested.json'
     path2 = 'gendiff/tests/fixtures/file2_nested.json'
