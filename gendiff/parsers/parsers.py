@@ -1,11 +1,21 @@
 import sys
 import argparse
+import yaml
+import json
 
 
-def take_arguments(args=sys.argv[1:]):
+def take_arguments(args=sys.argv[1:]):  # noqa: WPS404
+    """Take arguments from command line or list and return as dict.
+
+    Args:
+        args: first path to file, second path to file, format (optional)
+
+    Returns:
+        dictionaty with provided paths and format (optional)
+    """
     parser = argparse.ArgumentParser(description='Generate diff')
-    parser.add_argument('first_file', type=str, default=None, nargs='?')
-    parser.add_argument('second_file', type=str, default=None, nargs='?')
+    parser.add_argument('first_path_to_file', type=str, default=None, nargs='?')  # noqa: E501
+    parser.add_argument('second_path_to_file', type=str, default=None, nargs='?')  # noqa: E501
     parser.add_argument(
         '-f', '--format', metavar='FORMAT', help='set format of output',
     )
@@ -13,19 +23,22 @@ def take_arguments(args=sys.argv[1:]):
     paths = parser.parse_args(args)
 
     return {
-        'first file': paths.first_file,
-        'second file': paths.second_file,
+        'first path': paths.first_path_to_file,
+        'second path': paths.second_path_to_file,
         'format': paths.format,
     }
 
 
-def get_first_file(files):
-    return files.get('first file')
+def load_file(path):
+    """Load json or yaml file and convert it to python dict.
 
+    Args:
+        path (str): path to file
 
-def get_second_file(files):
-    return files.get('second file')
-
-
-def get_format(files):
-    return files.get('format')
+    Returns:
+        dict:
+    """
+    if path[path.index('.') + 1:] == 'yaml':
+        return yaml.load((open(path, 'r')), Loader=yaml.SafeLoader)  # noqa: WPS515, E501
+    if path[path.index('.') + 1:] == 'json':
+        return json.load(open(path))  # noqa: WPS515

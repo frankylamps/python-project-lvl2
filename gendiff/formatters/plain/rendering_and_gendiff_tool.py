@@ -1,12 +1,41 @@
 from gendiff.formatters.nested.gendiff_tool import get_all_keys
 
 
+def make_plain_structure(structure):
+    """Make plain structures out of structures with nested items.
+
+    Args:
+        structure (dict): any dictionary
+
+    Returns:
+        dict: dict with plain structures
+
+    Example:
+        structure_new: {'foo': {'bar': 1, 'baz': 2}}
+        plain structure_new: {'foo.bar': 1, 'foo.baz': 2}
+    """
+    plain_structure = {}
+
+    def add_paths(structure, previous_path=''):  # noqa:WPS442
+        for path in structure.keys():
+            if isinstance(structure[path], dict):
+                add_paths(
+                    structure[path],
+                    '{}.{}'.format(previous_path, path),
+                )
+            else:
+                new_path = '{}.{}'.format(previous_path, path)[1:]
+                plain_structure[new_path] = structure[path]
+    add_paths(structure)
+    return plain_structure  # noqa:WPS331
+
+
 def get_unique_path(path, paths):
     """Get the unique part of the path amoung all paths.
 
     Args:
-        path (str): e.g. foo.bar.baz
-        paths (list): e.g. ['foo', 'aggs']
+        path (str): e.g. 'foo.bar.baz.foo'
+        paths (list): e.g. ['foo', 'bar.eggz']
 
     Returns:
         str: e.g. "foo.bar"
@@ -25,15 +54,15 @@ def get_unique_path(path, paths):
         counter += 1
 
 
-def render_plain(dict_with_two_structures):
+def render_and_gen_plain_diff(structure_old, structure_new):  # noqa:WPS231
     """Print out the difference between two structures in plain style.
 
     Args:
         structure_old (dict): Old structure
         structure_new (dict): New structure
     """
-    structure_old = dict_with_two_structures.get('plain_structure_old')
-    structure_new = dict_with_two_structures.get('plain_structure_new')
+    structure_old = make_plain_structure(structure_old)
+    structure_new = make_plain_structure(structure_new)
 
     for path in get_all_keys(structure_old, structure_new):
         if structure_old.get(path) == structure_new.get(path):
@@ -42,7 +71,7 @@ def render_plain(dict_with_two_structures):
             print("Property '{}' was changed. From '{}' to '{}'".format(
                 path,
                 structure_old[path],
-                structure_new[path]
+                structure_new[path],
             ))
         elif path in structure_old.keys():
             unique_path = get_unique_path(path, list(structure_new.keys()))
