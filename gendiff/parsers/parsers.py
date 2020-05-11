@@ -14,8 +14,8 @@ def take_arguments(args=sys.argv[1:]):  # noqa: WPS404
         dictionaty with provided paths and format (optional)
     """
     parser = argparse.ArgumentParser(description='Generate diff')
-    parser.add_argument('first_path_to_file', type=str, default=None, nargs='?')  # noqa: E501
-    parser.add_argument('second_path_to_file', type=str, default=None, nargs='?')  # noqa: E501
+    parser.add_argument('first_path_to_file')  # noqa: E501
+    parser.add_argument('second_path_to_file')  # noqa: E501
     parser.add_argument(
         '-f', '--format', metavar='FORMAT', help='set format of output',
     )
@@ -38,7 +38,7 @@ def load_file(path):
     Returns:
         dict:
     """
-    if path[path.index('.') + 1:] == 'yaml':
+    if path[path.rfind('.') + 1:] == 'yaml':
         return yaml.load((open(path, 'r')), Loader=yaml.SafeLoader)  # noqa: WPS515, E501
-    if path[path.index('.') + 1:] == 'json':
+    if path[path.rfind('.') + 1:] == 'json':
         return json.load(open(path))  # noqa: WPS515
