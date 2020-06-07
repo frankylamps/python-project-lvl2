@@ -19,7 +19,7 @@ pytest-cov = "^2.8.1"
 
 
 [tool.poetry.scripts]
-gendiff= "gendiff.gendiff_main:gendiff"
+gendiff = "gendiff.script:main"
 
 [build-system]
 requires = ["poetry>=0.12"]
