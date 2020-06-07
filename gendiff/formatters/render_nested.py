@@ -46,7 +46,7 @@ def make_substring(end_value, part_of_path, sign, indention):
             part_of_path,
         ))
         string_to_print += make_dict_string(end_value, indention + 6)
-        string_to_print += ('{}}}\n'.format(' ' * (indention + 2)))  
+        string_to_print += ('{}}}\n'.format(' ' * (indention + 2)))
     else:
         string_to_print += '{}{} {}: {}\n'.format(
             ' ' * indention,

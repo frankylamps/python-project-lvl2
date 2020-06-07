@@ -1,28 +1,5 @@
-def get_attributes(gendiff_result, path):
-    if type(path) == str:
-        path = path.split('.')
-    inner_dict = gendiff_result.get(path[0])
-    if len(path) > 1:
-        return get_attributes(inner_dict, path[1:])
-    return inner_dict
-
-
-def get_paths(diff, previous_path=None):
-    path = []
-    for key in diff.keys():
-        inner_dict = diff[key]
-        if {'-', ' ', '+'} & set(inner_dict.keys()):
-            if previous_path:
-                path.append('{}.{}'.format(previous_path, key))
-            else:
-                path.append(key)
-        elif previous_path:
-            path.extend(get_paths(inner_dict, previous_path))
-        else:
-            path.extend(get_paths(inner_dict, key))
-
-    path.sort()
-    return path
+from gendiff.formatters.render_plain import get_attributes
+from gendiff.formatters.render_plain import get_paths
 
 
 def make_added_deleted_string(attributes, path):
