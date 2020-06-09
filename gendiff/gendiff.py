@@ -1,4 +1,6 @@
-def add_item(  # noqa:E302,DAR000
+
+
+def add_item(
     dictionary,
     new_key,
     value1,
