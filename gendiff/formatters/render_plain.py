@@ -25,26 +25,6 @@ def get_paths(diff, previous_path=None):
     return path
 
 
-def make_added_string(attributes, path):
-    dict_value = attributes.get('+').get('value')
-    if type(dict_value) == dict:
-        return "Property '{}' was added with value: 'complex value'\n".format(
-            path,
-        )
-    return "Property '{}' was added with value: '{}'\n".format(
-        path,
-        dict_value,
-    )
-
-
-def make_added_deleted_string(attributes, path):
-    return "Property '{}' was changed. From '{}' to '{}'\n".format(
-        path,
-        attributes.get('-').get('value'),
-        attributes.get('+').get('value'),
-    )
-
-
 def render_plain(diff):
     str_to_render = ''
     all_paths = get_paths(diff)
@@ -52,9 +32,22 @@ def render_plain(diff):
         attributes = get_attributes(diff, path)
         keys = list(attributes.keys())
         if len(keys) > 1:
-            str_to_render += make_added_deleted_string(attributes, path)
+            str_to_render += "Property '{}' was changed. From '{}' to '{}'\n".format(  # noqa: E501
+                path,
+                attributes.get('-').get('value'),
+                attributes.get('+').get('value'),
+            )
         elif keys[0] == '-':
             str_to_render += ("Property '{}' was removed\n".format(path))
         elif keys[0] == '+':
-            str_to_render += make_added_string(attributes, path)
+            dict_value = attributes.get('+').get('value')
+            if type(dict_value) == dict:
+                str_to_render += "Property '{}' was added with value: 'complex value'\n".format(  # noqa: E501
+                    path,
+                )
+            else:
+                str_to_render += "Property '{}' was added with value: '{}'\n".format(  # noqa: E501
+                    path,
+                    dict_value,
+                )
     return str_to_render[:-1]
