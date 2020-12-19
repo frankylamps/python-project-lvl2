@@ -25,7 +25,7 @@ def test_nested_plain(path_f1, path_f2, f, expected):
 
 @pytest.mark.parametrize('path_f1, path_f2, f', [
     (path_json_f1, path_json_f2, format.json),
-    (path_json_f1, path_json_f2, format.json), 
+    (path_json_f1, path_json_f2, format.json),
 ])
 def test_json(path_f1, path_f2, f):
-    assert json.loads(gendiff_main(path_f1, path_f2, f)) == json.load(open(expected_json, 'r'))
+    assert json.loads(gendiff_main(path_f1, path_f2, f)) == json.load(open(expected_json, 'r'))  # noqa: E501
