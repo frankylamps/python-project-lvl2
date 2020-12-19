@@ -1,47 +1,31 @@
-from gendiff.gendiff import gendiff
-from gendiff.formatters.render_json import render_json
-from gendiff.formatters.render_nested import render_nested
-from gendiff.formatters.render_plain import render_plain
-from gendiff.loader import load_file
+import json
+import pytest
+from gendiff.generate_diff import gendiff_main
+from gendiff import format
 
 
-def test_nested_json():
-    file1 = load_file('tests/fixtures/before.json')
-    file2 = load_file('tests/fixtures/after.json')
-    expected = (open('tests/fixtures/answer_nested.txt', 'r')).read()
-    assert render_nested(gendiff(file1, file2)) == expected
+path_json_f1 = 'tests/fixtures/before.json'
+path_json_f2 = 'tests/fixtures/after.json'
+path_yaml_f1 = 'tests/fixtures/before.yaml'
+path_yaml_f2 = 'tests/fixtures/after.yaml'
+expected_nested = 'tests/fixtures/answer_nested.txt'
+expected_plain = 'tests/fixtures/answer_plain.txt'
+expected_json = 'tests/fixtures/answer_json.json'
 
 
-def test_nested_yaml():
-    file1 = load_file('tests/fixtures/before.yaml')
-    file2 = load_file('tests/fixtures/after.yaml')
-    expected = (open('tests/fixtures/answer_nested.txt', 'r')).read()
-    assert render_nested(gendiff(file1, file2)) == expected
+@pytest.mark.parametrize('path_f1, path_f2, f, expected', [
+    (path_json_f1, path_json_f2, format.default, expected_nested),
+    (path_yaml_f1, path_yaml_f2, format.default, expected_nested),
+    (path_json_f1, path_json_f2, format.plain, expected_plain),
+    (path_yaml_f1, path_yaml_f2, format.plain, expected_plain),
+])
+def test_nested_plain(path_f1, path_f2, f, expected):
+    assert gendiff_main(path_f1, path_f2, f) == open(expected, 'r').read()
 
 
-def test_plain_json():
-    file1 = load_file('tests/fixtures/before.json')
-    file2 = load_file('tests/fixtures/after.json')
-    expected = (open('tests/fixtures/answer_plain.txt', 'r')).read()
-    assert render_plain(gendiff(file1, file2)) == expected
-
-
-def test_plain_yaml():
-    file1 = load_file('tests/fixtures/before.yaml')
-    file2 = load_file('tests/fixtures/after.yaml')
-    expected = (open('tests/fixtures/answer_plain.txt', 'r')).read()
-    assert render_plain(gendiff(file1, file2)) == expected
-
-
-def test_json_json():
-    file1 = load_file('tests/fixtures/before.json')
-    file2 = load_file('tests/fixtures/after.json')
-    expected = (open('tests/fixtures/answer_json.json', 'r')).read()
-    assert render_json(gendiff(file1, file2)) == expected
-
-
-def test_json_yaml():
-    file1 = load_file('tests/fixtures/before.yaml')
-    file2 = load_file('tests/fixtures/after.yaml')
-    expected = (open('tests/fixtures/answer_json.json', 'r')).read()
-    assert render_json(gendiff(file1, file2)) == expected
+@pytest.mark.parametrize('path_f1, path_f2, f', [
+    (path_json_f1, path_json_f2, format.json),
+    (path_json_f1, path_json_f2, format.json), 
+])
+def test_json(path_f1, path_f2, f):
+    assert json.loads(gendiff_main(path_f1, path_f2, f)) == json.load(open(expected_json, 'r'))

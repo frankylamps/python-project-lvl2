@@ -1,26 +1,35 @@
-from gendiff.loader import load_file
-from gendiff.gendiff import gendiff
-from gendiff.cli import take_arguments
-from gendiff.formatters.render_json import render_json
-from gendiff.formatters.render_nested import render_nested
-from gendiff.formatters.render_plain import render_plain
+import yaml
+import json
+import os
 
 
-def generate_diff(path1, path2):
-    file_one = load_file(path1)
-    file_two = load_file(path2)
-    difference = gendiff(file_one, file_two)
-    return render_nested(difference)
+def load_file(path):
+    if os.path.splitext(path)[1] == '.yaml':
+        return yaml.load((open(path, 'r')), Loader=yaml.SafeLoader)
+    if os.path.splitext(path)[1] == '.json':
+        return json.load(open(path))
 
 
-def gendiff_main():
-    comparing_files_paths = take_arguments()
-    file_one = load_file(comparing_files_paths.get('first path'))
-    file_two = load_file(comparing_files_paths.get('second path'))
-    difference = gendiff(file_one, file_two)
-    if comparing_files_paths['format'] == 'plain':
-        print(render_plain(difference))
-    if comparing_files_paths['format'] == 'json':
-        print(render_json(difference))
-    if comparing_files_paths['format'] == 'nested':
-        print(render_nested(difference))
+def gendiff_inner(dict_old, dict_new):
+    diff = {}
+    for key in set(dict_old.keys()) & set(dict_new.keys()):
+        key_old, key_new = dict_old[key], dict_new[key]
+        if key_old == key_new:
+            diff[key] = ('unchanged', key_old)
+        elif isinstance(key_old, dict) and isinstance(key_new, dict):
+            diff[key] = ('nested', gendiff_inner(key_old, key_new))
+        else:
+            diff[key] = ('changed', (dict_old.get(key), dict_new.get(key)))
+    for key in set(dict_old.keys()) - set(dict_new.keys()):
+        diff[key] = ('removed', dict_old[key])
+    for key in set(dict_new.keys()) - set(dict_old.keys()):
+        diff[key] = ('added', dict_new[key])
+    return diff
+
+
+def gendiff_main(*arguments):
+    path_to_file1, path_to_file2, output_format = arguments
+    file_one = load_file(path_to_file1)
+    file_two = load_file(path_to_file2)
+    difference = gendiff_inner(file_one, file_two)
+    return output_format(difference)

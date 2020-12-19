@@ -57,42 +57,25 @@ def make_substring(end_value, part_of_path, sign, indention):
     return string_to_print
 
 
-def render_nested(difference, indention=2, original=True):
-    """Convert result of gendiff func into string which can be pretty printed.
-
-    Args:
-        difference (dict): result of gendiff func
-        indention (int, optional): Defaults to 2.
-        original (bool, optional): False in recursion. Defaults to True.
-
-    Returns:
-        str: string that can be pretty printed as nested structure
-    """
+def format(difference, indention=2, original=True):
     str_to_print = ''
     if original:
         str_to_print += '{\n'
-
-    parts_of_path = list(difference.keys())
-    parts_of_path.sort()
-    for part_of_path in parts_of_path:
-        if set(difference[part_of_path].keys()) & {'+', '-', ' '}:
-            for sign in difference[part_of_path].keys():
-                str_to_print += make_substring(
-                    difference[part_of_path][sign]['value'],
-                    part_of_path,
-                    sign,
-                    indention,
-                )
-        else:
-            str_to_print += '  {}{}: {{\n'.format(  # noqa:P101
-                ' ' * indention,
-                part_of_path,
-            )
-            str_to_print += render_nested(
-                difference[part_of_path],
-                indention + 4,
-                original=False,
-            )
+    for key in sorted(difference.keys()):
+        status = difference[key][0]
+        val = difference[key][1]
+        if status == 'added':
+            str_to_print += make_substring(val, key, '+', indention)
+        if status == 'removed':
+            str_to_print += make_substring(val, key, '-', indention)
+        if status == 'unchanged':
+            str_to_print += make_substring(val, key, ' ', indention)
+        if status == 'changed':
+            str_to_print += make_substring(val[0], key, '-', indention)
+            str_to_print += make_substring(val[1], key, '+', indention)
+        if status == 'nested':
+            str_to_print += '  {}{}: {{\n'.format(' ' * indention, key)
+            str_to_print += format(val, indention + 4, False)
             str_to_print += '{}  }}\n'.format(' ' * indention)
     if original:
         str_to_print += '}'
