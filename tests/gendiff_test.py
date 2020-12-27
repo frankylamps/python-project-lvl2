@@ -14,18 +14,20 @@ expected_json = 'tests/fixtures/answer_json.json'
 
 
 @pytest.mark.parametrize('path_f1, path_f2, f, expected', [
-    (path_json_f1, path_json_f2, format.default, expected_nested),
-    (path_yaml_f1, path_yaml_f2, format.default, expected_nested),
-    (path_json_f1, path_json_f2, format.plain, expected_plain),
-    (path_yaml_f1, path_yaml_f2, format.plain, expected_plain),
+    (path_json_f1, path_json_f2, "default", expected_nested),
+    (path_yaml_f1, path_yaml_f2, "default", expected_nested),
+    (path_json_f1, path_json_f2, "plain", expected_plain),
+    (path_yaml_f1, path_yaml_f2, "plain", expected_plain),
 ])
 def test_nested_plain(path_f1, path_f2, f, expected):
-    assert gendiff_main(path_f1, path_f2, f) == open(expected, 'r').read()
+    output_format = format.formatter(f)
+    assert gendiff_main(path_f1, path_f2, output_format) == open(expected, 'r').read()
 
 
 @pytest.mark.parametrize('path_f1, path_f2, f', [
-    (path_json_f1, path_json_f2, format.json),
-    (path_json_f1, path_json_f2, format.json),
+    (path_json_f1, path_json_f2, "json"),
+    (path_json_f1, path_json_f2, "json"),
 ])
 def test_json(path_f1, path_f2, f):
-    assert json.loads(gendiff_main(path_f1, path_f2, f)) == json.load(open(expected_json, 'r'))  # noqa: E501
+    output_format = format.formatter(f)
+    assert json.loads(gendiff_main(path_f1, path_f2, output_format)) == json.load(open(expected_json, 'r'))  # noqa: E501

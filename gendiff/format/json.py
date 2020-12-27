@@ -6,8 +6,7 @@ def format(difference):
 
     def format_inner(difference, previous_path=''):
         for key in difference.keys():
-            status = difference[key][0]
-            val = difference[key][1]
+            status, val = difference[key]
             if status == 'removed':
                 json_dict['{}{}'.format(previous_path, key)] = 'Was removed'
             if status == 'added':

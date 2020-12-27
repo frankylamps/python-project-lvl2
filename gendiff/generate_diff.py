@@ -13,11 +13,11 @@ def load_file(path):
 def gendiff_inner(dict_old, dict_new):
     diff = {}
     for key in set(dict_old.keys()) & set(dict_new.keys()):
-        key_old, key_new = dict_old[key], dict_new[key]
-        if key_old == key_new:
-            diff[key] = ('unchanged', key_old)
-        elif isinstance(key_old, dict) and isinstance(key_new, dict):
-            diff[key] = ('nested', gendiff_inner(key_old, key_new))
+        value_old, value_new = dict_old[key], dict_new[key]
+        if value_old == value_new:
+            diff[key] = ('unchanged', value_old)
+        elif isinstance(value_old, dict) and isinstance(value_new, dict):
+            diff[key] = ('nested', gendiff_inner(value_old, value_new))
         else:
             diff[key] = ('changed', (dict_old.get(key), dict_new.get(key)))
     for key in set(dict_old.keys()) - set(dict_new.keys()):
@@ -27,8 +27,7 @@ def gendiff_inner(dict_old, dict_new):
     return diff
 
 
-def gendiff_main(*arguments):
-    path_to_file1, path_to_file2, output_format = arguments
+def gendiff_main(path_to_file1, path_to_file2, output_format):
     file_one = load_file(path_to_file1)
     file_two = load_file(path_to_file2)
     difference = gendiff_inner(file_one, file_two)

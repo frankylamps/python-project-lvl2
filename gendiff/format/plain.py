@@ -2,8 +2,7 @@
 def format(difference, previous_path=''):
     path = ""
     for key in sorted(difference.keys()):
-        status = difference[key][0]
-        val = difference[key][1]
+        status, val = difference[key]
         if status == 'removed':
             path += "Property '{}{}' was removed\n".format(previous_path, key)
         if status == 'added':
