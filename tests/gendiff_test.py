@@ -14,10 +14,10 @@ expected_json = 'tests/fixtures/answer_json.json'
 
 
 @pytest.mark.parametrize('path_f1, path_f2, f, expected', [
-    (path_json_f1, path_json_f2, "default", expected_nested),
-    (path_yaml_f1, path_yaml_f2, "default", expected_nested),
-    (path_json_f1, path_json_f2, "plain", expected_plain),
-    (path_yaml_f1, path_yaml_f2, "plain", expected_plain),
+    (path_json_f1, path_json_f2, 'default, expected_nested),
+    (path_yaml_f1, path_yaml_f2, 'default', expected_nested),
+    (path_json_f1, path_json_f2, 'plain', expected_plain),
+    (path_yaml_f1, path_yaml_f2, 'plain', expected_plain),
 ])
 def test_nested_plain(path_f1, path_f2, f, expected):
     output_format = format.formatter(f)
@@ -25,8 +25,8 @@ def test_nested_plain(path_f1, path_f2, f, expected):
 
 
 @pytest.mark.parametrize('path_f1, path_f2, f', [
-    (path_json_f1, path_json_f2, "json"),
-    (path_json_f1, path_json_f2, "json"),
+    (path_json_f1, path_json_f2, 'json'),
+    (path_json_f1, path_json_f2, 'json'),
 ])
 def test_json(path_f1, path_f2, f):
     output_format = format.formatter(f)
