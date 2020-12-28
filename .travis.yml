@@ -22,6 +22,6 @@ script:
   - make tests
 
 after_script: 
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build #--exit-code $TRAVIS_TEST_RESULT
 
 # single test suite, non-parallel build.
