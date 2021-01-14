@@ -4,5 +4,5 @@ install:
 lint:
 	poetry run flake8
 
-tests:
+test:
 	poetry run pytest --cov=gendiff tests/ --cov-report xml
