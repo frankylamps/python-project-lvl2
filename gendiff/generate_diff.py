@@ -20,10 +20,13 @@ def gendiff_inner(dict_old, dict_new):
             diff[key] = ('nested', gendiff_inner(value_old, value_new))
         else:
             diff[key] = ('changed', (dict_old.get(key), dict_new.get(key)))
-    for key in set(dict_old.keys()) - set(dict_new.keys()):
-        diff[key] = ('removed', dict_old[key])
-    for key in set(dict_new.keys()) - set(dict_old.keys()):
-        diff[key] = ('added', dict_new[key])
+    removed_keys = set(dict_old.keys()) - set(dict_new.keys())
+    added_keys = set(dict_new.keys()) - set(dict_old.keys())
+    for key in set(dict_old.keys()) | set(dict_new.keys()):
+        if key in removed_keys:
+            diff[key] = ('removed', dict_old[key])
+        if key in added_keys:
+            diff[key] = ('added', dict_new[key])
     return diff
 
 
