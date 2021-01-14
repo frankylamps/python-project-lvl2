@@ -8,6 +8,11 @@ python: 3.8
 before_install:
   # make depends on poetry
   - pip install poetry
+  - pip install flake8
+  - pip install pytest
+  - pip install pytest-cov
+  - pip install coverage
+  - pip install PyYAML
 
 instal:
   - make install
@@ -18,8 +23,8 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - make lint
   - make tests
+  - make lint
 
 after_script: 
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
