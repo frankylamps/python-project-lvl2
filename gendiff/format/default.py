@@ -50,14 +50,14 @@ def format(difference, indention=2, original=True):
         status = v[0]
         val = v[1]
         if status == 'changed':
-            list_of_strings.extend(make_substring(val[0], k, symbols['removed'], indention))
-            list_of_strings.extend(make_substring(val[1], k, symbols['added'], indention))
+            list_of_strings.extend(make_substring(val[0], k, symbols['removed'], indention))  # noqa: E501
+            list_of_strings.extend(make_substring(val[1], k, symbols['added'], indention))  # noqa: E501
         if status == 'nested':
             list_of_strings.append('  {}{}: {{'.format(' ' * indention, k))
             list_of_strings.extend(format(val, indention + 4, False))
             list_of_strings.append('{}  }}'.format(' ' * indention))
         elif status in symbols.keys():
-            list_of_strings.extend(make_substring(val, k, symbols[status], indention))
+            list_of_strings.extend(make_substring(val, k, symbols[status], indention))  # noqa: E501
     if original:
         list_of_strings.insert(0, '{')
         list_of_strings.append('}')
