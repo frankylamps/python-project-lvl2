@@ -12,20 +12,21 @@ def load_file(path):
 
 def gendiff_inner(dict_old, dict_new):
     diff = {}
-    added_values = set(dict_new.keys()) - set(dict_old.keys())
-    removed_values = set(dict_old.keys()) - set(dict_new.keys())
-    for key in set(dict_old.keys()) | set(dict_new.keys()):
+    added_keys = set(dict_new.keys()) - set(dict_old.keys())
+    removed_keys = set(dict_old.keys()) - set(dict_new.keys())
+    keeped_keys = set(dict_old.keys()) & set(dict_new.keys())
+    for key in dict_old.keys() | dict_new.keys():
         value_old, value_new = dict_old.get(key), dict_new.get(key)
-        if value_old and value_new:
+        if key in keeped_keys:
             if value_old == value_new:
                 diff[key] = ('unchanged', value_old)
             elif isinstance(value_old, dict) and isinstance(value_new, dict):
                 diff[key] = ('nested', gendiff_inner(value_old, value_new))
             elif value_old != value_new:
                 diff[key] = ('changed', (dict_old.get(key), dict_new.get(key)))
-        elif key in removed_values:
+        elif key in removed_keys:
             diff[key] = ('removed', dict_old[key])
-        elif key in added_values:
+        elif key in added_keys:
             diff[key] = ('added', dict_new[key])
     return diff
 

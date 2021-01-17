@@ -48,19 +48,18 @@ def make_substring(end_value, part_of_path, sign, indention):
     return list_of_strings
 
 
+symbols = {
+    'added': '+',
+    'removed': '-',
+    'unchanged': ' ',
+}
+
+
 def format(difference, indention=2, original=True):
     list_of_strings = []
-    if original:
-        list_of_strings.append('{')
     for key in sorted(difference.keys()):
         status = difference[key][0]
         val = difference[key][1]
-        if status == 'added':
-            list_of_strings.extend(make_substring(val, key, '+', indention))
-        if status == 'removed':
-            list_of_strings.extend(make_substring(val, key, '-', indention))
-        if status == 'unchanged':
-            list_of_strings.extend(make_substring(val, key, ' ', indention))
         if status == 'changed':
             list_of_strings.extend(make_substring(val[0], key, '-', indention))
             list_of_strings.extend(make_substring(val[1], key, '+', indention))
@@ -68,7 +67,11 @@ def format(difference, indention=2, original=True):
             list_of_strings.append('  {}{}: {{'.format(' ' * indention, key))
             list_of_strings.extend(format(val, indention + 4, False))
             list_of_strings.append('{}  }}'.format(' ' * indention))
+        elif status in symbols.keys():
+            sign = symbols[status]
+            list_of_strings.extend(make_substring(val, key, sign, indention))
     if original:
+        list_of_strings.insert(0, '{')
         list_of_strings.append('}')
         return "\n".join(list_of_strings)
     return list_of_strings
